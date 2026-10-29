@@ -263,3 +263,40 @@ The encoding process stores the secret file data inside image bytes, while the d
 By completing this project, we gain practical knowledge of C programming, file handling, pointers, structures, bitwise operations, and modular programming.
 
 Overall, this project provides a simple introduction to image steganography and shows how binary data can be stored and recovered using the C programming language.
+
+## Project Flowchart
+
+The following flowchart illustrates the encoding and decoding processes of the C Steganography project.
+
+```mermaid
+flowchart TD
+    A([Start]) --> B[Read Command-Line Arguments]
+    B --> C{Operation Type?}
+
+    C -->| -e | D[Validate Encoding Arguments]
+    D --> E[Open BMP and Secret Files]
+    E --> F[Check Image Capacity]
+    F --> G{Enough Capacity?}
+    G -->|No| H[Display Error]
+    H --> Z([End])
+    G -->|Yes| I[Copy 54-Byte BMP Header]
+    I --> J[Encode Magic String]
+    J --> K[Encode Secret Extension]
+    K --> L[Encode Secret File Size]
+    L --> M[Encode Secret Data Using LSB]
+    M --> N[Copy Remaining Image Data]
+    N --> O[Save Output BMP]
+    O --> Z
+
+    C -->| -d | P[Validate Decoding Arguments]
+    P --> Q[Open Stego BMP]
+    Q --> R[Skip 54-Byte BMP Header]
+    R --> S[Decode and Verify Magic String]
+    S --> T[Decode Secret Extension and Size]
+    T --> U[Extract Secret Data Using LSB]
+    U --> V[Save Recovered Secret File]
+    V --> Z
+
+    C -->|Invalid| W[Display Error]
+    W --> Z
+```
